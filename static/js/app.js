@@ -61,54 +61,11 @@ function updateFilters() {
     // 9. Loop through all of the filters and keep any data that
     // matches the filter values
 
-    //after intense testing, i have zero clue what the difference is between:
-    //filteredData = filteredData.filter(row => row.datetime === filters.datetime);
-    //the above line works with all filters, not just datetime BUT it has to manually be typed VERSUS
-
-    //filteredData = filteredData.filter((row) => row.newFilter === filters.newFilter);
-    //the above line does not change the table at all, despite being almost identical BUT it registers the filters and the loop functions properly
-
-    //console.log(filteredData.filter((row) => row.datetime === filters.datetime));
-
-    //console.log(filteredData.filter(row => row.datetime === filters.datetime));
-    //console.log(filters.datetime);
-
-
-    Object.values(filters).forEach((newFilter) => {
+    Object.entries(filters).forEach(([key, value]) => {
         //console.log(filter) filter returns values, not keys
-        //console.log(newFilter);
-        //console.log(filteredData.filter((row) => row.newFilter === filters.newFilter));
-        if(filteredData.filter((row) => row.newFilter === filters.newFilter)){
-            filteredData = filteredData.filter((row) => row.newFilter === filters.newFilter);//why do you refuse to work?
-            //console.log(filteredData.filter((row) => row.newFilter === filters.newFilter));
-            //console.log("changes applied");
-        }
-        //this is more testing just to try anything
-        /*
-        Object.values(filteredData).forEach((rowData) => {
-            //console.log(rowData); rowData returns each row of data as an object
-            if(rowData.newFilter = filters.newFilter){
-              filteredData = filteredData.filter((row) => row.newFilter === filters.newFilter);
-            }
-            
-            Object.values(rowData).forEach((row) =>{
-                //console.log(row); row returns each piece of data individually, the values
-
-                if(row == newFilter){
-                    console.log("true")
-                    filteredData = filteredData.filter(rowData =>  row == newFilter);
-                }
-            });
-            
-        });
-        */
+        filteredData = filteredData.filter(row => row[key] === value);
     });
-    //this is just to have the program working cause apperantly the functioning loop doesnt function, works if all 5 fields are filled in
-    filteredData = filteredData.filter(row => row.datetime === filters.datetime);
-    filteredData = filteredData.filter(row => row.city === filters.city);
-    filteredData = filteredData.filter(row => row.state === filters.state);
-    filteredData = filteredData.filter(row => row.country === filters.country);
-    filteredData = filteredData.filter(row => row.shape === filters.shape);
+
     // 10. Finally, rebuild the table using the filtered data
     buildTable(filteredData);
     //console.log("table updated")
